@@ -1,10 +1,15 @@
 package guru.springframework.sfgpetclinic.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class IndexControllerTest {
 
@@ -35,5 +40,39 @@ class IndexControllerTest {
 //                "Message to build" +
 //                "For my test"
 //        );
+    }
+
+    @Test
+    @DisplayName("Timeout test")
+    @Disabled("Demo timeout")
+    void testTimeOut() {
+        assertTimeout(Duration.ofMillis(100), () -> {
+            Thread.sleep(5000);
+
+            System.out.println("test");
+        });
+    }
+
+    @Test
+    @DisplayName("Timeout test preempt")
+    @Disabled("Demo timeout")
+    void testTimeOutPreempt() {
+        assertTimeoutPreemptively(Duration.ofMillis(120), () -> {
+            Thread.sleep(5000);
+
+            System.out.println("test");
+        });
+    }
+
+    @Test
+    @DisplayName("Test assumption")
+    void testAssumptionTrue() {
+        assumeTrue("GURU".equalsIgnoreCase(System.getenv("GURU_RUNTIME")));
+    }
+
+    @Test
+    @DisplayName("Test assumption")
+    void testAssumptionTrueIsAssumptionTrue() {
+        assumeTrue("GURU".equalsIgnoreCase("GURU"));
     }
 }
