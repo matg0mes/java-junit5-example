@@ -1,9 +1,6 @@
 package guru.springframework.sfgpetclinic.controllers;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.Duration;
 
@@ -11,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@Tag("controller")
 class IndexControllerTest {
 
     IndexController controller;
@@ -45,6 +43,17 @@ class IndexControllerTest {
     }
 
     @Test
+    @Disabled("Demo timeout")
+    @DisplayName("Timeout test preempt")
+    void testTimeOutPreempt() {
+        assertTimeoutPreemptively(Duration.ofMillis(120), () -> {
+            Thread.sleep(5000);
+
+            System.out.println("test");
+        });
+    }
+
+    @Test
     @DisplayName("Timeout test")
     @Disabled("Demo timeout")
     void testTimeOut() {
@@ -56,17 +65,7 @@ class IndexControllerTest {
     }
 
     @Test
-    @DisplayName("Timeout test preempt")
-    @Disabled("Demo timeout")
-    void testTimeOutPreempt() {
-        assertTimeoutPreemptively(Duration.ofMillis(120), () -> {
-            Thread.sleep(5000);
-
-            System.out.println("test");
-        });
-    }
-
-    @Test
+    @Disabled("Demonster assumption false")
     @DisplayName("Test assumption")
     void testAssumptionTrue() {
         assumeTrue("GURU".equalsIgnoreCase(System.getenv("GURU_RUNTIME")));
